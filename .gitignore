@@ -1,0 +1,28 @@
+node_modules/
+.next/
+.vercel/
+*.log
+.DS_Store
+*.tsbuildinfo
+
+# Secrets / environment: only the example file is committed
+.env*
+!.env.example
+
+# Real member data and backups: never commit
+*.xlsx
+*.xls
+*.ods
+*.csv
+!*.example.csv
+*.dump
+*.backup
+*.sql.gz
+backups/
+*.pem
+fd-import-out/
+supabase/.temp/
+supabase/import/member_map.csv
+supabase/import/note_rows.csv
+supabase/import/run_import.sql
+supabase/import/run_*.sql

@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+/* Dark mode follows the data-theme attribute on <html> (set before paint by an inline script). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------- Design tokens ---------- */
+:root {
+  /* fixed brand colors */
+  --fd-emerald: #0b7a5a;
+  --fd-gold: #f5b83d;
+  --fd-ink: #10201a;
+  --fd-mist: #f3f7f5;
+  --fd-accent-dark: #34d399;
+
+  /* light theme (default) */
+  --bg: var(--fd-mist);
+  --fg: var(--fd-ink);
+  --muted: #52675e;
+  --surface: rgb(255 255 255 / 0.72);
+  --surface-strong: #ffffff;
+  --border: rgb(16 32 26 / 0.1);
+  --accent: var(--fd-emerald);
+  --accent-fg: #ffffff;
+  --accent-soft: rgb(11 122 90 / 0.1);
+  --danger: #b42318;
+  --danger-soft: rgb(180 35 24 / 0.08);
+  --glow-1: rgb(11 122 90 / 0.18);
+  --glow-2: rgb(245 184 61 / 0.18);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #07120e;
+  --fg: #e7f3ed;
+  --muted: #9cb3a9;
+  --surface: rgb(255 255 255 / 0.05);
+  --surface-strong: #0f1f19;
+  --border: rgb(255 255 255 / 0.1);
+  --accent: var(--fd-accent-dark);
+  --accent-fg: var(--fd-ink);
+  --accent-soft: rgb(52 211 153 / 0.12);
+  --danger: #f97066;
+  --danger-soft: rgb(249 112 102 / 0.12);
+  --glow-1: rgb(52 211 153 / 0.14);
+  --glow-2: rgb(245 184 61 / 0.1);
+  color-scheme: dark;
+}
+
+/* No-JS fallback: follow the system setting when no theme was applied. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #07120e;
+    --fg: #e7f3ed;
+    --muted: #9cb3a9;
+    --surface: rgb(255 255 255 / 0.05);
+    --surface-strong: #0f1f19;
+    --border: rgb(255 255 255 / 0.1);
+    --accent: var(--fd-accent-dark);
+    --accent-fg: var(--fd-ink);
+    --accent-soft: rgb(52 211 153 / 0.12);
+    --danger: #f97066;
+    --danger-soft: rgb(249 112 102 / 0.12);
+    --glow-1: rgb(52 211 153 / 0.14);
+    --glow-2: rgb(245 184 61 / 0.1);
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-emerald: var(--fd-emerald);
+  --color-gold: var(--fd-gold);
+  --color-ink: var(--fd-ink);
+  --color-mist: var(--fd-mist);
+
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+
+  --font-sans: var(--font-inter), var(--font-hind), ui-sans-serif, system-ui, sans-serif;
+  --font-bengali: var(--font-hind), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+html[lang="bn"] body {
+  font-family: var(--font-bengali);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  background-image:
+    radial-gradient(40rem 28rem at 10% -10%, var(--glow-1), transparent 70%),
+    radial-gradient(36rem 26rem at 100% 0%, var(--glow-2), transparent 70%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Rotating member ring (home dashboard) ---------- */
+.fd-ring {
+  --size: min(86vw, 21rem);
+  --item: clamp(2.4rem, calc(var(--size) * 0.14), 3.3rem);
+  --radius: calc(var(--size) / 2 - var(--item) / 2 - 0.25rem);
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  margin-inline: auto;
+}
+.fd-ring-center {
+  position: absolute;
+  inset: 22%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  border-radius: 9999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 40px -12px rgb(16 32 26 / 0.25);
+  backdrop-filter: blur(12px);
+}
+.fd-ring-orbit {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: fd-spin 90s linear infinite;
+}
+.fd-ring-orbit > li {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--item);
+  height: var(--item);
+  margin: calc(var(--item) / -2);
+  /* place on the circle, then turn back so the photo is upright */
+  transform: rotate(calc(360deg / var(--n) * var(--i)))
+    translateY(calc(var(--radius) * -1))
+    rotate(calc(-360deg / var(--n) * var(--i)));
+}
+.fd-ring-item {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: fd-spin-back 90s linear infinite; /* cancels the orbit's turn: faces stay upright */
+}
+.fd-ring:hover .fd-ring-orbit,
+.fd-ring:hover .fd-ring-item,
+.fd-ring:focus-within .fd-ring-orbit,
+.fd-ring:focus-within .fd-ring-item {
+  animation-play-state: paused;
+}
+@keyframes fd-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fd-spin-back {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fd-ring-orbit,
+  .fd-ring-item {
+    animation: none;
+  }
+}
