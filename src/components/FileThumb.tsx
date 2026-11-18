@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react";
 import { signFile, type SignResult } from "@/app/actions/files";
 import type { FileRef } from "@/lib/members";
 import { useI18n } from "./I18nProvider";
+import { ImageViewer } from "./ImageViewer";
 import { cn } from "./ui";
 
 /**
@@ -93,56 +93,8 @@ export function FileThumb({
         )}
       </button>
       {failed && <p className="mt-1 text-xs text-danger">{t.profile.viewFailed}</p>}
-      {open && <Lightbox url={open} label={label} onClose={() => setOpen(null)} />}
+      {open && <ImageViewer url={open} label={label} onClose={() => setOpen(null)} />}
     </>
-  );
-}
-
-export function Lightbox({ url, label, onClose }: { url: string; label: string; onClose: () => void }) {
-  const { t } = useI18n();
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [onClose]);
-
-  // Portal to <body>: blurred parent cards would otherwise trap a fixed overlay.
-  return createPortal(
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label={label}
-      className="fixed inset-0 z-50 flex flex-col bg-black/85 p-4 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-3 pb-3 text-white">
-        <p className="truncate text-sm font-semibold">{label}</p>
-        <button
-          type="button"
-          onClick={onClose}
-          autoFocus
-          className="inline-flex h-10 items-center rounded-full bg-white/15 px-4 text-sm font-semibold hover:bg-white/25"
-        >
-          {t.profile.close}
-        </button>
-      </div>
-      <div className="grid min-h-0 flex-1 place-items-center">
-        {/* eslint-disable-next-line @next/next/no-img-element -- private signed URL */}
-        <img
-          src={url}
-          alt={label}
-          onClick={(e) => e.stopPropagation()}
-          className="max-h-full max-w-full rounded-xl bg-white object-contain shadow-2xl"
-        />
-      </div>
-    </div>,
-    document.body,
   );
 }
 

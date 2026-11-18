@@ -153,7 +153,7 @@ export default async function MemberDetailPage({ params }: PageProps<"/members/[
 
       <Card className="mt-4 space-y-5">
         <div className="flex flex-wrap items-center gap-4">
-          <Avatar url={avatars.get(id)} name={member.name} size={84} />
+          <Avatar url={avatars.get(id)} name={member.name} size={84} zoom />
           <div className="min-w-0 flex-1">
             <h1 className="truncate text-2xl font-bold tracking-tight sm:text-3xl">{member.name || "—"}</h1>
             <div className="mt-1.5 flex flex-wrap items-center gap-1.5">

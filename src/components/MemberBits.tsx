@@ -1,12 +1,15 @@
 import type { MemberStatus } from "@/lib/auth";
+import { ZoomableAvatar } from "./ImageViewer";
 
 /** Chip color for a member status. */
 export const statusTone = (s: MemberStatus): "accent" | "gold" | "danger" | "neutral" =>
   s === "active" ? "accent" : s === "pending" ? "gold" : s === "suspended" ? "danger" : "neutral";
 
 /** Round member photo, or the first letter of the name when there is no photo. */
-export function Avatar({ url, name, size = 48 }: { url?: string | null; name: string; size?: number }) {
+export function Avatar({ url, name, size = 48, zoom = false }: { url?: string | null; name: string; size?: number; zoom?: boolean }) {
   const initial = name.trim().charAt(0).toUpperCase() || "?";
+  // zoom = the photo opens large when clicked (never use it inside a link)
+  if (url && zoom) return <ZoomableAvatar url={url} name={name} size={size} />;
   return url ? (
     // eslint-disable-next-line @next/next/no-img-element -- private signed URL
     <img

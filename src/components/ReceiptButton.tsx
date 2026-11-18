@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signReceipt, type SignResult } from "@/app/actions/files";
 import { useI18n } from "./I18nProvider";
-import { Lightbox } from "./FileThumb";
+import { ImageViewer } from "./ImageViewer";
 
 /** "View receipt" link: fetches a FRESH 60-second signed URL on click. PDFs open in a new tab. */
 export function ReceiptButton({
@@ -52,7 +52,7 @@ export function ReceiptButton({
         {busy ? t.common.loading : label}
       </button>
       {failed && <span className="ml-2 text-xs text-danger">{t.profile.viewFailed}</span>}
-      {url && <Lightbox url={url} label={label} onClose={() => setUrl(null)} />}
+      {url && <ImageViewer url={url} label={label} onClose={() => setUrl(null)} />}
     </>
   );
 }

@@ -235,7 +235,7 @@ export default async function AdminDepositsPage({ searchParams }: PageProps<"/ad
                   <Card className="space-y-4 p-4 sm:p-5">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="flex min-w-0 items-center gap-3">
-                        <Avatar url={photoUrl.get(d.memberId)} name={name} size={44} />
+                        <Avatar url={photoUrl.get(d.memberId)} name={name} size={44} zoom />
                         <div className="min-w-0">
                           <p className="truncate font-semibold">{name}</p>
                           <p className="text-xs text-muted">

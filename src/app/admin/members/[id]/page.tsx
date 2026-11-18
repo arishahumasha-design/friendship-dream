@@ -71,7 +71,7 @@ export default async function AdminMemberPage({ params }: PageProps<"/admin/memb
       </Link>
 
       <div className="mt-4 flex flex-wrap items-center gap-4">
-        <Avatar url={files.photo?.url} name={name} size={72} />
+        <Avatar url={files.photo?.url} name={name} size={72} zoom />
         <div className="min-w-0">
           <h1 className="truncate text-2xl font-bold tracking-tight sm:text-3xl">{name}</h1>
           <div className="mt-1.5 flex flex-wrap gap-1.5">
