@@ -35,6 +35,11 @@ export function LoginForm({ next, notice }: { next?: string; notice?: "loggedOut
         autoComplete="current-password"
         required
       />
+      <p className="-mt-1 text-right text-sm">
+        <Link href="/forgot-password" className="font-semibold text-accent hover:underline">
+          {t.auth.forgotLink}
+        </Link>
+      </p>
       <Button type="submit" disabled={pending} className="w-full">
         {pending ? t.common.loading : t.auth.loginButton}
       </Button>

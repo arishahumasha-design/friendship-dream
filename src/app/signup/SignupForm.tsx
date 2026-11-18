@@ -54,7 +54,7 @@ export function SignupForm() {
         label={t.auth.password}
         hint={t.auth.passwordHint}
         autoComplete="new-password"
-        minLength={8}
+        minLength={10}
         required
       />
       <Field
@@ -63,7 +63,7 @@ export function SignupForm() {
         type="password"
         label={t.auth.confirmPassword}
         autoComplete="new-password"
-        minLength={8}
+        minLength={10}
         required
       />
       <Button type="submit" disabled={pending} className="w-full">

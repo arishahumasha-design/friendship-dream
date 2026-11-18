@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { ChangePasswordForm } from "@/components/ChangePasswordForm";
 import { ProfileForm } from "@/components/ProfileForm";
 import { Chip } from "@/components/ui";
 import { requireActiveMember } from "@/lib/auth";
@@ -33,6 +34,9 @@ export default async function ProfilePage() {
       </div>
       <p className="mt-2 mb-6 text-xs text-muted">{t.profile.lockedHint}</p>
       <ProfileForm record={record} mode="edit" />
+      <div className="mt-8">
+        <ChangePasswordForm />
+      </div>
     </div>
   );
 }

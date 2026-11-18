@@ -14,7 +14,7 @@ const MEMBER_PATHS = [
   "/profile",
 ];
 const ADMIN_PATHS = ["/admin"];
-const AUTH_PAGES = ["/login", "/signup"];
+const AUTH_PAGES = ["/login", "/signup", "/forgot-password"];
 
 function matches(pathname: string, paths: string[]) {
   return paths.some((p) => pathname === p || pathname.startsWith(p + "/"));
